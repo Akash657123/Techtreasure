@@ -36,11 +36,37 @@
 		a:hover {
 			color: #007fff;
 		}
+		/* Menu styles */
+		.menu {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			background-color: #333;
+			color: #fff;
+			text-align: center;
+			padding: 10px;
+		}
+		.menu a {
+			color: #fff;
+			text-decoration: none;
+		}
+		.menu a:hover {
+			color: #ccc;
+		}
 	</style>
 </head>
 <body>
+	<!-- Menu -->
+	<div class="menu">
+		<a href="#html-basics">HTML Basics</a>
+		<a href="#html-tags">HTML Tags</a>
+		<a href="#html-resources">Resources</a>
+	</div>
+	
 	<h1>Welcome to Learning HTML!</h1>
 	<p>This page is designed to help you learn some basic HTML concepts.</p>
+	
 	<section id="html-basics">
 		<h2>HTML Basics</h2>
 		<p>HTML stands for HyperText Markup Language.</p>
@@ -50,6 +76,7 @@
 			<li>Content goes inside the tags.</li>
 		</ul>
 	</section>
+	
 	<section id="html-tags">
 		<h2>Common HTML Tags</h2>
 		<table>
@@ -71,6 +98,7 @@
 			</tr>
 		</table>
 	</section>
+	
 	<section id="html-resources">
 		<h2>Additional Resources</h2>
 		<ul>
