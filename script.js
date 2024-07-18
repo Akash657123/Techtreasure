@@ -125,12 +125,15 @@ document.getElementById('quiz-btn').addEventListener('click', function() {
   submitQuizBtn.addEventListener('click', function() {
     // Check user's answers
     quizQuestions.forEach((question, index) => {
-      const userAnswer = document.querySelector(`input[name="answer-${index}"]:checked`).value;
-      if (userAnswer === question.correctAnswer) {
-        // Increment score
-        game.score++;
-      }
-    });
+  const userAnswer = document.querySelector(`input[name="answer-${index}"]:checked`);
+  if (userAnswer) {
+    const userAnswerValue = userAnswer.value;
+    if (userAnswerValue === question.correctAnswer) {
+      // Increment score
+      game.score++;
+    }
+  }
+});
     // Render final score
     document.getElementById('quiz-container').innerHTML = `
       <h2>Quiz Results</h2>
