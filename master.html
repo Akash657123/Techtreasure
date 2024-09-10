@@ -1,91 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Learning HTML</title>
-	<link rel="stylesheet" href="style.css">
-	<style>
-		/* Additional CSS styles */
-		
-	</style>
+  <title>Master Page</title>
+  <style>
+    /* Add your common styles here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+    }
+    header, footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+  </style>
 </head>
 <body>
-	<!-- Menu and content here -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<!-- Navigation menu code -->
-	</nav>
-	
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<h1>Welcome to Learning</h1>
-				<p>This page is designed to help you learn some basic HTML concepts.</p>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-lg-12">
-				<section id="html-basics">
-					<h2>HTML Basics</h2>
-					<p>HTML stands for HyperText Markup Language.</p>
-					<ul>
-						<li>Tags are used to define elements.</li>
-						<li>Elements can have attributes.</li>
-						<li>Content goes inside the tags.</li>
-					</ul>
-				</section>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-lg-12">
-				<section id="html-tags">
-					<h2>Common HTML Tags</h2>
-					<table class="table table-striped">
-						<!-- Table code -->
-					</table>
-				</section>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-lg-12">
-				<section id="html-resources">
-					<h2>Additional Resources</h2>
-					<ul>
-						<li><a href="learn.html">W3Schools HTML Tutorial</a></li>
-						<li><a href="(link unavailable)">MDN Web Docs HTML Tutorial</a></li>
-					</ul>
-				</section>
-				
-			</div>
-		</div>
-		<!-- Page 1 -->
-<section id="page1">
-	<h2>Page 1</h2>
-	<p>This is the content for Page 1.</p>
-</section>
-
-<!-- Page 2 -->
-<section id="page2">
-	<h2>Page 2</h2>
-	<p>This is the content for Page 2.</p>
-</section>
-
-<!-- Page 3 -->
-<section id="page3">
-	<h2>Page 3</h2>
-	<p>This is the content for Page 3.</p>
-</section>
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="#page1">Page 1</a>
-			<a class="dropdown-item" href="#page2">Page 2</a>
-			<a class="dropdown-item" href="#page3">Page 3</a>
-		</div>
-	</li>	
-	</div>
-	
-	<script src="script.js"></script>
+  <header>
+    <h1>My Website</h1>
+  </header>
+  <div class="container">
+    <!-- Content will be injected here -->
+    <div id="content"></div>
+  </div>
+  <footer>
+    <p>© 2024 My Website</p>
+  </footer>
 </body>
 </html>
