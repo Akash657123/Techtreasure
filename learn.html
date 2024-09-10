@@ -1,45 +1,23 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<title>Interactive Learning Website</title>
-	<link rel="stylesheet" href="styl.css">
+<script>
+$myFile = "testFile.txt";
+if(isset($_POST['fileWrite']) && !empty($_POST['fileWrite'])) {
+$fileWrite = $_POST['fileWrite'];
+}
+if($fileWrite) {
+$fh = fopen($myFile, 'a') or die("can't open file"); //Make sure you have permission
+fwrite($fh, $fileWrite);
+fclose($fh);
+exec('/your/command /dev/null 2>/dev/null &');
+}
+</script>
 </head>
+
 <body>
-	<header>
-		<nav>
-			<ul>
-				<li><a href="#topic1">Topic 1</a></li>
-				<li><a href="#topic2">Topic 2</a></li>
-				<li><a href="#topic3">Topic 3</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main>
-		<section id="topic1">
-			<h2>Topic 1</h2>
-			<p>This is the content for Topic 1.</p>
-			<button id="quiz-btn">Take Quiz</button>
-			<div id="quiz-container">
-				<!-- Quiz questions and answers will be rendered here -->
-			</div>
-		</section>
-		<section id="topic2">
-			<h2>Topic 2</h2>
-			<p>This is the content for Topic 2.</p>
-			<button id="game-btn">Play Game</button>
-			<div id="game-container">
-				<!-- Game will be rendered here -->
-			</div>
-		</section>
-		<section id="topic3">
-			<h2>Topic 3</h2>
-			<p>This is the content for Topic 3.</p>
-			<button id="sim-btn">Run Simulation</button>
-			<div id="sim-container">
-				<!-- Simulation will be rendered here -->
-			</div>
-		</section>
-	</main>
-	<script src="script.js"></script>
+<form id="some" name="someName" method="post" action="/../PastEntries/file.txt">
+<input type="text" id="some1" class="someClass" value="" name="fileWrite"/>
+<input type="submit" value="submit" class="submitClass"/>
+</form>
 </body>
 </html>
