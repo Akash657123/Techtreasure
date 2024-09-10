@@ -3,13 +3,33 @@
 <head>
   <title>Submit to Google Sheets</title>
   <style>
-    /* Add your specific styles here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
     form {
       background: #fff;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      width: 100%;
     }
     input, textarea {
       width: 100%;
@@ -17,6 +37,7 @@
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
+      box-sizing: border-box;
     }
     button {
       background-color: #28a745;
@@ -26,6 +47,7 @@
       border-radius: 4px;
       cursor: pointer;
       width: 100%;
+      font-size: 16px;
     }
     button:hover {
       background-color: #218838;
@@ -48,6 +70,7 @@
 </head>
 <body>
   <div id="content">
+    <h1>Contact Us</h1>
     <form id="form" name="submit-to-google-sheet">
       <input type="text" name="Name" placeholder="Name" required>
       <input type="email" name="Email" placeholder="Email" required>
@@ -68,18 +91,13 @@
       e.preventDefault();
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => {
-          if (response.ok) {
-            successMessage.style.display = 'block';
-            errorMessage.style.display = 'none';
-            form.reset();
-          } else {
-            throw new Error('Network response was not ok.');
-          }
+          successMessage.style.display = 'block';
+          errorMessage.style.display = 'none';
+          form.reset();
         })
         .catch(error => {
           successMessage.style.display = 'none';
           errorMessage.style.display = 'block';
-          console.error('Error!', error.message);
         });
     });
   </script>
