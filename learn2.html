@@ -3,15 +3,7 @@
 <head>
   <title>Submit to Google Sheets</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+    /* Add your specific styles here */
     form {
       background: #fff;
       padding: 20px;
@@ -55,14 +47,16 @@
   </style>
 </head>
 <body>
-  <form id="form" name="submit-to-google-sheet">
-    <input type="text" name="Name" placeholder="Name" required>
-    <input type="email" name="Email" placeholder="Email" required>
-    <textarea name="Message" placeholder="Message" required></textarea>
-    <button type="submit">Submit</button>
-    <div class="success-message">Form submitted successfully!</div>
-    <div class="error-message">There was an error submitting the form.</div>
-  </form>
+  <div id="content">
+    <form id="form" name="submit-to-google-sheet">
+      <input type="text" name="Name" placeholder="Name" required>
+      <input type="email" name="Email" placeholder="Email" required>
+      <textarea name="Message" placeholder="Message" required></textarea>
+      <button type="submit">Submit</button>
+      <div class="success-message">Form submitted successfully!</div>
+      <div class="error-message">There was an error submitting the form.</div>
+    </form>
+  </div>
 
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycby6OAs6m8ch6fTKLyDfjoYpxCuqLbh4zEnMF3noTpUwsattjyTDzUgO39rL9wcgLrFdkA/exec';
@@ -88,6 +82,14 @@
           console.error('Error!', error.message);
         });
     });
+
+    // Load the master page content
+    fetch('master.html')
+      .then(response => response.text())
+      .then(data => {
+        document.body.innerHTML = data;
+        document.getElementById('content').innerHTML = document.getElementById('content').innerHTML;
+      });
   </script>
 </body>
 </html>
