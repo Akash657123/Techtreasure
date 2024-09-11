@@ -19,6 +19,11 @@
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       width: 400px;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     h1 {
       color: #333;
@@ -38,6 +43,10 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus {
+      border-color: #28a745;
     }
     button {
       background-color: #28a745;
@@ -48,6 +57,7 @@
       cursor: pointer;
       width: 100%;
       font-size: 16px;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #218838;
@@ -66,21 +76,63 @@
       background-color: #f8d7da;
       color: #721c24;
     }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; 
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    .progress-bar {
+      width: 0;
+      height: 5px;
+      background-color: #28a745;
+      margin-top: 10px;
+      transition: width 0.3s;
+    }
   </style>
 </head>
 <body>
   <div id="content">
     <h1>Contact Us</h1>
     <form id="form" name="submit-to-google-sheet">
-      <input type="text" name="Name" placeholder="Name" required>
-      <input type="email" name="Email" placeholder="Email" required>
-      <textarea name="Message" placeholder="Message" required></textarea>
+      <div class="tooltip">
+        <input type="text" name="Name" placeholder="Name" required>
+        <span class="tooltiptext">Enter your full name</span>
+      </div>
+      <div class="tooltip">
+        <input type="email" name="Email" placeholder="Email" required>
+        <span class="tooltiptext">Enter your email address</span>
+      </div>
+      <div class="tooltip">
+        <textarea name="Message" placeholder="Message" required></textarea>
+        <span class="tooltiptext">Enter your message</span>
+      </div>
       <button type="submit">Submit</button>
+      <div class="progress-bar" id="progress-bar"></div>
       <div class="success-message">Form submitted successfully!</div>
       <div class="error-message">There was an error submitting the form.</div>
     </form>
   </div>
 
+  
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycby6OAs6m8ch6fTKLyDfjoYpxCuqLbh4zEnMF3noTpUwsattjyTDzUgO39rL9wcgLrFdkA/exec';
     const form = document.forms['submit-to-google-sheet'];
