@@ -126,31 +126,43 @@
         <span class="tooltiptext">Enter your message</span>
       </div>
       <button type="submit">Submit</button>
+      <button type="button" id="reset-button">Reset</button>
       <div class="progress-bar" id="progress-bar"></div>
       <div class="success-message">Form submitted successfully!</div>
       <div class="error-message">There was an error submitting the form.</div>
     </form>
   </div>
 
-  
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycby6OAs6m8ch6fTKLyDfjoYpxCuqLbh4zEnMF3noTpUwsattjyTDzUgO39rL9wcgLrFdkA/exec';
     const form = document.forms['submit-to-google-sheet'];
     const successMessage = document.querySelector('.success-message');
     const errorMessage = document.querySelector('.error-message');
+    const progressBar = document.getElementById('progress-bar');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
+      progressBar.style.width = '100%'; // Show progress bar
+
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => {
           successMessage.style.display = 'block';
           errorMessage.style.display = 'none';
           form.reset();
+          progressBar.style.width = '0'; // Reset progress bar
         })
         .catch(error => {
           successMessage.style.display = 'none';
           errorMessage.style.display = 'block';
+          progressBar.style.width = '0'; // Reset progress bar
         });
+    });
+
+    document.getElementById('reset-button').addEventListener('click', () => {
+      form.reset();
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+      progressBar.style.width = '0'; // Reset progress bar
     });
   </script>
 </body>
