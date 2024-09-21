@@ -30,16 +30,17 @@
       margin-bottom: 20px;
     }
     form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 100%;
+      display: flex;
+      flex-direction: column; /* Align elements in a column */
+    }
+    .form-group {
+      margin-bottom: 15px;
+      position: relative; /* For tooltip positioning */
     }
     input, textarea {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
@@ -58,6 +59,7 @@
       width: 100%;
       font-size: 16px;
       transition: background-color 0.3s;
+      margin-top: 10px; /* Space above buttons */
     }
     button:hover {
       background-color: #218838;
@@ -78,7 +80,6 @@
     }
     .tooltip {
       position: relative;
-      display: inline-block;
     }
     .tooltip .tooltiptext {
       visibility: hidden;
@@ -113,15 +114,15 @@
   <div id="content">
     <h1>Contact Us</h1>
     <form id="form" name="submit-to-google-sheet">
-      <div class="tooltip">
+      <div class="form-group tooltip">
         <input type="text" name="Name" placeholder="Name" required>
         <span class="tooltiptext">Enter your full name</span>
       </div>
-      <div class="tooltip">
+      <div class="form-group tooltip">
         <input type="email" name="Email" placeholder="Email" required>
         <span class="tooltiptext">Enter your email address</span>
       </div>
-      <div class="tooltip">
+      <div class="form-group tooltip">
         <textarea name="Message" placeholder="Message" required></textarea>
         <span class="tooltiptext">Enter your message</span>
       </div>
