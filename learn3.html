@@ -55,7 +55,7 @@
       margin-bottom: 15px;
       position: relative;
     }
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -63,7 +63,7 @@
       box-sizing: border-box;
       transition: border-color 0.3s;
     }
-    input:focus, select:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: #28a745;
     }
     button {
@@ -109,11 +109,12 @@
     <a href="#home" onclick="showSection('home')">Home</a>
     <a href="#contact" onclick="showSection('contact')">Contact</a>
     <a href="#tech" onclick="showSection('tech')">Tech Form</a>
+    <a href="#pdf" onclick="showSection('pdf')">PDF Link</a>
   </div>
 
   <div id="home">
     <h1>Welcome to Our Website</h1>
-    <p>This is the home page. Feel free to navigate to the contact page or tech form!</p>
+    <p>This is the home page. Feel free to navigate to the contact page, tech form, or PDF link!</p>
   </div>
 
   <div id="contact" style="display:none;">
@@ -166,6 +167,12 @@
     </form>
   </div>
 
+  <div id="pdf" style="display:none;">
+    <h1>PDF Document</h1>
+    <p>Click the link below to view the PDF:</p>
+    <a href="https://github.com/Akash657123/Techtreasure/blob/main/databricksgenai.pdf" target="_blank">View PDF Document</a>
+  </div>
+
   <script>
     const contactScriptURL = 'https://script.google.com/macros/s/AKfycbwR1SjgW5GvRBRS5ulEnE2x3ZE1Wkrh8YDiQWFDrqCMvAAJYZXrVkbhfQ897gtWw1FPUg/exec';
     const techScriptURL = 'https://script.google.com/macros/s/AKfycby6OAs6m8ch6fTKLyDfjoYpxCuqLbh4zEnMF3noTpUwsattjyTDzUgO39rL9wcgLrFdkA/exec';
@@ -182,6 +189,7 @@
       document.getElementById('home').style.display = 'none';
       document.getElementById('contact').style.display = 'none';
       document.getElementById('tech').style.display = 'none';
+      document.getElementById('pdf').style.display = 'none';
       document.getElementById(section).style.display = 'block';
     }
 
