@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Submit to Google Sheets</title>
+    <title>Submit to Google Sheets - Tech Form</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,7 +28,7 @@
     #navbar a:hover {
       background-color: #218838;
     }
-    #home, #contact {
+    #tech-form {
       background: #fff;
       padding: 30px;
       border-radius: 10px;
@@ -37,7 +37,6 @@
       text-align: center;
       animation: fadeIn 1s ease-in-out;
       margin-top: 20px;
-      display: none; /* Hide both sections by default */
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -56,7 +55,7 @@
       margin-bottom: 15px;
       position: relative;
     }
-    input, textarea {
+    input, select, textarea {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -64,7 +63,7 @@
       box-sizing: border-box;
       transition: border-color 0.3s;
     }
-    input:focus, textarea:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: #28a745;
     }
     button {
@@ -96,29 +95,6 @@
       background-color: #f8d7da;
       color: #721c24;
     }
-    .tooltip {
-      position: relative;
-    }
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 120px;
-      background-color: #555;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%; 
-      left: 50%;
-      margin-left: -60px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
-    }
     .progress-bar {
       width: 0;
       height: 5px;
@@ -132,77 +108,128 @@
   <div id="navbar">
     <a href="#home" onclick="showSection('home')">Home</a>
     <a href="#contact" onclick="showSection('contact')">Contact</a>
+    <a href="#tech" onclick="showSection('tech')">Tech Form</a>
+    <a href="#pdf" onclick="showSection('pdf')">PDF Link</a>
   </div>
 
   <div id="home">
     <h1>Welcome to Our Website</h1>
-    <p>This is the home page. Feel free to navigate to the contact page to reach out to us!</p>
+    <p>This is the home page. Feel free to navigate to the contact page, tech form, or PDF link!</p>
   </div>
 
-  <div id="contact">
+  <div id="contact" style="display:none;">
     <h1>Contact Us</h1>
     <form id="form" name="submit-to-google-sheet">
-      <div class="form-group tooltip">
+      <div class="form-group">
         <input type="text" name="Name" placeholder="Name" required>
-        <span class="tooltiptext">Enter your full name</span>
       </div>
-      <div class="form-group tooltip">
+      <div class="form-group">
         <input type="email" name="Email" placeholder="Email" required>
-        <span class="tooltiptext">Enter your email address</span>
       </div>
-      <div class="form-group tooltip">
+      <div class="form-group">
         <textarea name="Message" placeholder="Message" required></textarea>
-        <span class="tooltiptext">Enter your message</span>
       </div>
       <button type="submit">Submit</button>
-      <button type="button" id="reset-button">Reset</button>
       <div class="progress-bar" id="progress-bar"></div>
       <div class="success-message">Form submitted successfully!</div>
       <div class="error-message">There was an error submitting the form.</div>
     </form>
   </div>
 
+  <div id="tech" style="display:none;">
+    <h1>Tech Form</h1>
+    <form id="tech-form" name="submit-to-google-sheet-tech">
+      <div class="form-group">
+        <input type="text" name="Name" placeholder="Name" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" name="Phone" placeholder="Phone" required>
+      </div>
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <select name="Technology" required>
+          <option value="">Select Technology</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Mobile Development">Mobile Development</option>
+          <option value="Data Science">Data Science</option>
+          <option value="AI/ML">AI/ML</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="text" name="Profession" placeholder="Profession" required>
+      </div>
+      <button type="submit">Submit</button>
+      <div class="progress-bar" id="tech-progress-bar"></div>
+      <div class="success-message">Form submitted successfully!</div>
+      <div class="error-message">There was an error submitting the form.</div>
+    </form>
+  </div>
+
+  <div id="pdf" style="display:none;">
+    <h1>PDF Document</h1>
+    <p>Click the link below to view the PDF:</p>
+    <a href="https://akash657123.github.io/Techtreasure/databricksgenai.pdf">View PDF Document</a>
+  </div>
+
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwR1SjgW5GvRBRS5ulEnE2x3ZE1Wkrh8YDiQWFDrqCMvAAJYZXrVkbhfQ897gtWw1FPUg/exec';
-   <!-- const scriptURL = 'https://script.google.com/macros/s/AKfycby6OAs6m8ch6fTKLyDfjoYpxCuqLbh4zEnMF3noTpUwsattjyTDzUgO39rL9wcgLrFdkA/exec';-->
-    const form = document.forms['submit-to-google-sheet'];
+    const contactScriptURL = 'https://script.google.com/macros/s/AKfycbwR1SjgW5GvRBRS5ulEnE2x3ZE1Wkrh8YDiQWFDrqCMvAAJYZXrVkbhfQ897gtWw1FPUg/exec';
+    const techScriptURL = 'https://script.google.com/macros/s/AKfycby6OAs6m8ch6fTKLyDfjoYpxCuqLbh4zEnMF3noTpUwsattjyTDzUgO39rL9wcgLrFdkA/exec';
+    
+    const contactForm = document.forms['submit-to-google-sheet'];
+    const techForm = document.forms['submit-to-google-sheet-tech'];
     const successMessage = document.querySelector('.success-message');
     const errorMessage = document.querySelector('.error-message');
     const progressBar = document.getElementById('progress-bar');
+    const techProgressBar = document.getElementById('tech-progress-bar');
 
     // Function to show selected section
     function showSection(section) {
       document.getElementById('home').style.display = 'none';
       document.getElementById('contact').style.display = 'none';
+      document.getElementById('tech').style.display = 'none';
+      document.getElementById('pdf').style.display = 'none';
       document.getElementById(section).style.display = 'block';
     }
 
     // Show home section by default
     showSection('home');
 
-    form.addEventListener('submit', e => {
+    contactForm.addEventListener('submit', e => {
       e.preventDefault();
-      progressBar.style.width = '100%'; // Show progress bar
+      progressBar.style.width = '100%';
 
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      fetch(contactScriptURL, { method: 'POST', body: new FormData(contactForm)})
         .then(response => {
           successMessage.style.display = 'block';
           errorMessage.style.display = 'none';
-          form.reset();
-          progressBar.style.width = '0'; // Reset progress bar
+          contactForm.reset();
+          progressBar.style.width = '0';
         })
         .catch(error => {
           successMessage.style.display = 'none';
           errorMessage.style.display = 'block';
-          progressBar.style.width = '0'; // Reset progress bar
+          progressBar.style.width = '0';
         });
     });
 
-    document.getElementById('reset-button').addEventListener('click', () => {
-      form.reset();
-      successMessage.style.display = 'none';
-      errorMessage.style.display = 'none';
-      progressBar.style.width = '0'; // Reset progress bar
+    techForm.addEventListener('submit', e => {
+      e.preventDefault();
+      techProgressBar.style.width = '100%';
+
+      fetch(techScriptURL, { method: 'POST', body: new FormData(techForm)})
+        .then(response => {
+          successMessage.style.display = 'block';
+          errorMessage.style.display = 'none';
+          techForm.reset();
+          techProgressBar.style.width = '0';
+        })
+        .catch(error => {
+          successMessage.style.display = 'none';
+          errorMessage.style.display = 'block';
+          techProgressBar.style.width = '0';
+        });
     });
   </script>
 </body>
