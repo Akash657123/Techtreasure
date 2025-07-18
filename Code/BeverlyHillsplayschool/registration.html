@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Register a New Student</h2>
+  <form action="/submit-registration" method="post">
+    <label>Full Name:</label><br>
+    <input type="text" name="studentName"><br>
+
+    <label>Date of Birth:</label><br>
+    <input type="date" name="dob"><br>
+
+    <label>Parent/Guardian Name:</label><br>
+    <input type="text" name="guardianName"><br>
+
+    <label>Contact Number:</label><br>
+    <input type="tel" name="contact"><br>
+
+    <label>Class/Grade:</label><br>
+    <select name="class">
+      <option value="Nursery">Nursery</option>
+      <option value="KG">KG</option>
+      <option value="Prep">Prep</option>
+    </select><br><br>
+
+    <input type="submit" value="Register">
+  </form>
+</body>
+</html>
