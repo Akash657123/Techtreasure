@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Feedback Form</title>
+  <title>Teacher Feedback Form</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -10,8 +10,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
     }
 
     .form-container {
@@ -20,7 +21,7 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
       width: 100%;
-      max-width: 400px;
+      max-width: 600px;
     }
 
     h2 {
@@ -36,7 +37,7 @@
       color: #555;
     }
 
-    input, textarea {
+    input, select, textarea {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -46,7 +47,7 @@
       transition: border-color 0.3s;
     }
 
-    input:focus, textarea:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: #74ebd5;
       outline: none;
     }
@@ -77,16 +78,65 @@
 </head>
 <body>
   <div class="form-container">
-    <h2>Feedback Form</h2>
+    <h2>Teacher Feedback Form</h2>
     <form id="feedback-form">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+      <label for="studentName">Your Name</label>
+      <input type="text" id="studentName" name="studentName" required>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+      <label for="teacherName">Teacher's Name</label>
+      <input type="text" id="teacherName" name="teacherName" required>
 
-      <label for="message">Feedback</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
+      <label for="subject">Subject Taught</label>
+      <input type="text" id="subject" name="subject" required>
+
+      <label for="communication">Communication Skills</label>
+      <select id="communication" name="communication" required>
+        <option value="">Select</option>
+        <option value="Excellent">Excellent</option>
+        <option value="Good">Good</option>
+        <option value="Average">Average</option>
+        <option value="Poor">Poor</option>
+      </select>
+
+      <label for="behavior">Behavior with Students</label>
+      <select id="behavior" name="behavior" required>
+        <option value="">Select</option>
+        <option value="Respectful">Respectful</option>
+        <option value="Friendly">Friendly</option>
+        <option value="Strict">Strict</option>
+        <option value="Unapproachable">Unapproachable</option>
+      </select>
+
+      <label for="punctuality">Punctuality</label>
+      <select id="punctuality" name="punctuality" required>
+        <option value="">Select</option>
+        <option value="Always on time">Always on time</option>
+        <option value="Mostly on time">Mostly on time</option>
+        <option value="Sometimes late">Sometimes late</option>
+        <option value="Often late">Often late</option>
+      </select>
+
+      <label for="clarity">Clarity of Teaching</label>
+      <select id="clarity" name="clarity" required>
+        <option value="">Select</option>
+        <option value="Very clear">Very clear</option>
+        <option value="Clear">Clear</option>
+        <option value="Somewhat confusing">Somewhat confusing</option>
+        <option value="Confusing">Confusing</option>
+      </select>
+
+      <label for="overall">Overall Rating</label>
+      <select id="overall" name="overall" required>
+        <option value="">Select</option>
+        <option value="5 - Excellent">5 - Excellent</option>
+        <option value="4 - Good">4 - Good</option>
+        <option value="3 - Average">3 - Average</option>
+        <option value="2 - Poor">2 - Poor</option>
+        <option value="1 - Very Poor">1 - Very Poor</option>
+      </select>
+
+      <label for="comments">Additional Comments</label>
+      <textarea id="comments" name="comments" rows="4"></textarea>
 
       <button type="submit">Submit</button>
       <div class="success-message" id="success">Thank you for your feedback!</div>
@@ -101,12 +151,18 @@
       e.preventDefault();
 
       const data = {
-        name: form.name.value,
-        email: form.email.value,
-        message: form.message.value
+        studentName: form.studentName.value,
+        teacherName: form.teacherName.value,
+        subject: form.subject.value,
+        communication: form.communication.value,
+        behavior: form.behavior.value,
+        punctuality: form.punctuality.value,
+        clarity: form.clarity.value,
+        overall: form.overall.value,
+        comments: form.comments.value
       };
 
-      fetch('https://script.google.com/macros/s/AKfycbyRFo86GX4495UUSqDe8OYEor00cU2cPWR5RfTc6K4ecaqqScr-DsplsV3WOJP-3P0RAQ/exec', {
+      fetch('YOUR_WEB_APP_URL', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
