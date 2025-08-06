@@ -1,1 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 30px;
+  background-color: #f0f8ff;
+}
+
+header {
+  background-color: #6495ed;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 30px;
+  background-color: #f0f8ff;
+}
+
+header {
+  background-color: #6495ed;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0 20px 0;
+  border: 2px solid #87ceeb;
+  border-radius: 8px;
+  background-color: #fefefe;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+input:focus,
+select:focus {
+  border-color: #00bfff;
+  box-shadow: 0 0 10px rgba(0,191,255,0.3);
+  outline: none;
+}
 
