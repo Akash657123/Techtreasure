@@ -5,7 +5,7 @@
   <title>View Teacher Feedback</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to right, #ACB6E5, #74ebd5);
       padding: 40px;
       margin: 0;
@@ -30,7 +30,6 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
     }
 
     th, td {
@@ -47,6 +46,19 @@
 
     tr:hover {
       background-color: #f1f1f1;
+    }
+
+    button {
+      padding: 6px 10px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e60000;
     }
 
     .back-link {
@@ -72,14 +84,15 @@
       <thead>
         <tr>
           <th>Student Name</th>
-          <th>Teacher Name</th>
+          <th>Teacher</th>
           <th>Subject</th>
           <th>Communication</th>
-          <th>Behavior</th>
+          <th>Behaviour</th>
           <th>Punctuality</th>
           <th>Clarity</th>
-          <th>Rating</th>
+          <th>Overall</th>
           <th>Comments</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -91,16 +104,15 @@
   </div>
 
   <script>
-    const sheetURL = 'https://script.google.com/macros/s/AKfycbyRFo86GX4495UUSqDe8OYEor00cU2cPWR5RfTc6K4ecaqqScr-DsplsV3WOJP-3P0RAQ/exec';
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwS0oWikrb0jIL_geLSWJPNUgDvgu_hqjpAAIVfXNQystkNVtVlRA0KxjI3Oqyvt76PLg/exec";
 
-    fetch(sheetURL)
+    fetch(scriptURL)
       .then(response => response.json())
       .then(data => {
         const tbody = document.querySelector('#feedbackTable tbody');
         data.slice(1).forEach(row => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td>${row[0]}</td>
             <td>${row[1]}</td>
             <td>${row[2]}</td>
             <td>${row[3]}</td>
@@ -109,15 +121,28 @@
             <td>${row[6]}</td>
             <td>${row[7]}</td>
             <td>${row[8]}</td>
+            <td>${row[9]}</td>
+            <td><button onclick="deleteEntry('${row[1]}', '${row[2]}', this)">Delete</button></td>
           `;
           tbody.appendChild(tr);
         });
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        const tbody = document.querySelector('#feedbackTable tbody');
-        tbody.innerHTML = `<tr><td colspan="9">Unable to load feedback data.</td></tr>`;
       });
+
+    function deleteEntry(studentName, teacherName, button) {
+      fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode: "delete", studentName, teacherName })
+      })
+      .then(() => {
+        const row = button.closest('tr');
+        row.remove();
+      })
+      .catch(err => {
+        console.error('Delete failed:', err);
+        alert('Could not delete entry.');
+      });
+    }
   </script>
 </body>
 </html>
