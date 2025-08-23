@@ -129,3 +129,134 @@ footer {
   padding: 15px;
   margin-top: 40px;
 }
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background: #0078D7;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#searchInput {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.cert-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.cert-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.cert-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.cert-card h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #0078D7;
+}
+
+.cert-list {
+  list-style: none;
+  padding-left: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.cert-list.expanded {
+  max-height: 1000px;
+}
+
+.cert-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.cert-list li i {
+  margin-right: 8px;
+  color: #0078D7;
+}
+
+.progress-bar {
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  background: #0078D7;
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #0078D7;
+  color: white;
+  margin-top: 40px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px; right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
