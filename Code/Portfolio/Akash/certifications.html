@@ -19,7 +19,9 @@
   <input type="text" id="searchInput" placeholder="Search certifications..." onkeyup="filterCerts()">
 
   <section>
-    <div class="cert-section">
+    
+      <!-- Example Card -->
+      <div class="cert-section">
       <!-- Example Card -->
       <div class="cert-card" onclick="toggleCard(this)">
         <h2>🧠 Microsoft Certifications</h2>
@@ -33,7 +35,50 @@
         </ul>
       </div>
 
-      <!-- Add other cert cards here following the same structure -->
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🧪 Databricks Certifications</h2>
+        <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+        <ul class="cert-list">
+          <li><i class="fas fa-brain"></i> Generative AI Fundamentals</li>
+          <li><i class="fas fa-server"></i> Platform Administrator</li>
+          <li><i class="fas fa-rocket"></i> Gen AI & LLM on Databricks</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>☁️ AWS Certifications</h2>
+        <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
+        <ul class="cert-list">
+          <li><i class="fas fa-cloud"></i> Cloud Practitioner</li>
+          <li><i class="fas fa-brain"></i> AI Practitioner</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🌐 Google Cloud Certifications</h2>
+        <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+        <ul class="cert-list">
+          <li><i class="fas fa-cloud"></i> Cloud Architect</li>
+          <li><i class="fas fa-brain"></i> Machine Learning Engineer</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🔮 Oracle Certifications</h2>
+        <div class="progress-bar"><div class="progress-fill" style="width: 50%;"></div></div>
+        <ul class="cert-list">
+          <li><i class="fas fa-brain"></i> AI Certified Foundations Associate</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🎯 Other Certifications</h2>
+        <div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div>
+        <ul class="cert-list">
+          <li><i class="fas fa-code"></i> GitHub Foundations</li>
+          <li><i class="fas fa-brain"></i> PG Program in AI & Deep Learning</li>
+        </ul>
+      </div>
     </div>
   </section>
 
