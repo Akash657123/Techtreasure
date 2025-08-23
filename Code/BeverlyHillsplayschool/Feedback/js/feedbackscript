@@ -16,7 +16,7 @@ form.addEventListener('submit', e => {
     comments: form.comments.value
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbwS0oWikrb0jIL_geLSWJPNUgDvgu_hqjpAAIVfXNQystkNVtVlRA0KxjI3Oqyvt76PLg/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbwOrHenOzhgWbwhuUbyazoXJddU-6dld7vD8VJJMl7aFRmHIGguUHRIOI4WmwFfy7Lc2Q/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
