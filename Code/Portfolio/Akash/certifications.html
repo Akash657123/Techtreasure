@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Certifications</title>
+  <title>My Certifications</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
   <header>
-    <h1>🎓 My Certifications</h1>
+    <h1>📜 My Certifications</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="achievements.html">Achievements</a>
@@ -16,18 +17,96 @@
   </header>
 
   <section>
-    <div class="card">
-      <ul>
-        <li>Google Data Analytics – Coursera</li>
-        <li>Full Stack Web Development – Udemy</li>
-        <li>Microsoft Azure Fundamentals – Microsoft Learn</li>
-        <li>Python for Everybody – University of Michigan</li>
-      </ul>
+    <div class="cert-section">
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🧠 Microsoft Certifications</h2>
+        <ul class="cert-list">
+          <li>Fabric Data Engineer Associate (DP700)</li>
+          <li>Azure Fundamentals (AZ-900)</li>
+          <li>Azure IoT Developer Specialty</li>
+          <li>Azure Data Fundamentals</li>
+          <li>Azure AI Fundamentals</li>
+          <li>Solutions Architect Expert</li>
+          <li>DevOps Engineer Expert</li>
+          <li>Azure Data Scientist Associate</li>
+          <li>Azure AI Engineer Associate</li>
+          <li>Identity and Access Administrator Associate</li>
+          <li>Power Apps + Dynamics 365 Developer Associate</li>
+          <li>Power Platform Functional Consultant Associate</li>
+          <li>Fabric Analytics Engineer Associate</li>
+          <li>Power Platform Developer Associate</li>
+          <li>Microsoft 365 Identity and Services (MS-100)</li>
+          <li>Microsoft 365 Administrator Expert</li>
+          <li>Cybersecurity Architect Expert</li>
+          <li>Azure for SAP Workloads Specialty</li>
+          <li>Azure Cosmos DB Developer Specialty</li>
+          <li>Odyssey AI Skill Challenge Completion</li>
+          <li>Power BI Data Analyst Associate</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🧪 Databricks Certifications</h2>
+        <ul class="cert-list">
+          <li>Lakehouse Fundamentals</li>
+          <li>Azure Platform Architect</li>
+          <li>Generative AI Fundamentals</li>
+          <li>GCP Platform Architect</li>
+          <li>Platform Administrator</li>
+          <li>Sales Hadoop Migration</li>
+          <li>Generative AI Engineering</li>
+          <li>Gen AI & LLM on Databricks</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>☁️ AWS Certifications</h2>
+        <ul class="cert-list">
+          <li>Cloud Practitioner</li>
+          <li>Data Engineer – Associate</li>
+          <li>Developer – Associate</li>
+          <li>AI Practitioner</li>
+          <li>Machine Engineer – Associate</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🌐 Google Cloud Certifications</h2>
+        <ul class="cert-list">
+          <li>Cloud DevOps Engineer</li>
+          <li>Cloud Architect</li>
+          <li>Associate Cloud Engineer</li>
+          <li>Data Engineer</li>
+          <li>Machine Learning Engineer</li>
+          <li>Cloud Developer</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🔮 Oracle Certifications</h2>
+        <ul class="cert-list">
+          <li>AI Certified Foundations Associate</li>
+          <li>Foundations Associate</li>
+          <li>Data Certified Foundations Associate</li>
+        </ul>
+      </div>
+
+      <div class="cert-card" onclick="toggleCard(this)">
+        <h2>🎯 Other Certifications</h2>
+        <ul class="cert-list">
+          <li>GitHub Foundations</li>
+          <li>PG Program in AI & Deep Learning</li>
+          <li>ServiceNow Gen AI+ Partner Sales</li>
+          <li>Salesforce AI Associate</li>
+          <li>Salesforce AI Specialist</li>
+          <li>Now Assist Executive Micro</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Your Name
+    &copy; 2025 Your Name | Built with passion and precision
   </footer>
 </body>
 </html>
