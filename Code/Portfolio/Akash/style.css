@@ -57,3 +57,75 @@ footer {
   text-align: center;
   padding: 15px;
 }
+body {
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  background: #f0f4f8;
+  color: #333;
+}
+
+header {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+nav {
+  margin-top: 10px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+
+section {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.cert-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cert-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.cert-card:hover {
+  transform: translateY(-5px);
+}
+
+.cert-card h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #0072ff;
+}
+
+.cert-list {
+  margin-top: 15px;
+  padding-left: 20px;
+  display: none;
+  line-height: 1.8;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
