@@ -1,26 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Submit Form</title>
+  <meta charset="UTF-8">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .link {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .link a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h2>Contact Form</h2>
-  <form id="contactForm">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
-    <label>Message:</label><br>
-    <textarea name="message" required></textarea><br><br>
-    <button type="submit">Submit</button>
-  </form>
-
-  <br>
-  <!-- 🔗 Link to View Page -->
-  <p>Want to see all submissions? <a href="view.html">Click here to view data</a></p>
+  <div class="form-container">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="link">
+      <p><a href="view.html">View Submissions</a></p>
+    </div>
+  </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxwv5YyUhLVysR66IFvsJHLQoZoF7qTBkjsq87-D_HVpe0XNgkbjJtyV_MoSyo3Ebw/exec"; // Replace with your Apps Script URL
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxwv5YyUhLVysR66IFvsJHLQoZoF7qTBkjsq87-D_HVpe0XNgkbjJtyV_MoSyo3Ebw/exec";
 
     document.getElementById("contactForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -30,8 +86,11 @@
         body: formData
       })
       .then(response => response.text())
-      .then(result => alert("Form submitted successfully!"))
-      .catch(error => alert("Error submitting form."));
+      .then(result => {
+        alert("✅ Submitted successfully!");
+        this.reset();
+      })
+      .catch(error => alert("❌ Submission failed."));
     });
   </script>
 </body>
