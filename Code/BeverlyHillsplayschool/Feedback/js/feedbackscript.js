@@ -18,7 +18,7 @@ form.addEventListener('submit', e => {
   };
 
   // Send data to Google Apps Script Web App
-  fetch('https://script.google.com/macros/s/AKfycbwOrHenOzhgWbwhuUbyazoXJddU-6dld7vD8VJJMl7aFRmHIGguUHRIOI4WmwFfy7Lc2Q/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbw69MumJEohTPiNNBBmaWawiT5wyMHXEVlvLVzpY9mYsV_TEotX-ZrfXuek7TSbu4MBxA/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
