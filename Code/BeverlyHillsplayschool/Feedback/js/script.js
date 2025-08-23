@@ -1,4 +1,4 @@
-const scriptURL = "https://script.google.com/macros/s/AKfycbwS0oWikrb0jIL_geLSWJPNUgDvgu_hqjpAAIVfXNQystkNVtVlRA0KxjI3Oqyvt76PLg/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbwOrHenOzhgWbwhuUbyazoXJddU-6dld7vD8VJJMl7aFRmHIGguUHRIOI4WmwFfy7Lc2Q/exec";
 let pendingDelete = null;
 
 fetch(scriptURL)
