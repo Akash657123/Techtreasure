@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Form</title>
+</head>
+<body>
+  <h2>Contact Form</h2>
+  <form id="contactForm">
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br><br>
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+    <label>Message:</label><br>
+    <textarea name="message" required></textarea><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <br>
+  <!-- 🔗 Link to View Page -->
+  <p>Want to see all submissions? <a href="view.html">Click here to view data</a></p>
+
+  <script>
+    const scriptURL = "YOUR_WEB_APP_URL"; // Replace with your Apps Script URL
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch(scriptURL, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(result => alert("Form submitted successfully!"))
+      .catch(error => alert("Error submitting form."));
+    });
+  </script>
+</body>
+</html>
