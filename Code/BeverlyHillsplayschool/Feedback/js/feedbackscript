@@ -1,0 +1,30 @@
+const form = document.getElementById('feedback-form');
+const successMessage = document.getElementById('success');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const data = {
+    studentName: form.studentName.value,
+    teacherName: form.teacherName.value,
+    subject: form.subject.value,
+    communication: form.communication.value,
+    behavior: form.behavior.value,
+    punctuality: form.punctuality.value,
+    clarity: form.clarity.value,
+    overall: form.overall.value,
+    comments: form.comments.value
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbwS0oWikrb0jIL_geLSWJPNUgDvgu_hqjpAAIVfXNQystkNVtVlRA0KxjI3Oqyvt76PLg/exec', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
+  form.reset();
+  successMessage.style.display = 'block';
+  setTimeout(() => successMessage.style.display = 'none', 3000);
+});
