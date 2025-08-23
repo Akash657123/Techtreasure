@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Teacher Feedback</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ACB6E5, #74ebd5);
+      padding: 40px;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      max-width: 1000px;
+      margin: auto;
+      overflow-x: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #74ebd5;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Submitted Teacher Feedback</h2>
+    <table id="feedbackTable">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Teacher Name</th>
+          <th>Subject</th>
+          <th>Communication</th>
+          <th>Behavior</th>
+          <th>Punctuality</th>
+          <th>Clarity</th>
+          <th>Rating</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="back-link">
+      <p><a href="form.html">← Back to Feedback Form</a></p>
+    </div>
+  </div>
+
+  <script>
+    const sheetURL = 'https://script.google.com/macros/s/AKfycbyRFo86GX4495UUSqDe8OYEor00cU2cPWR5RfTc6K4ecaqqScr-DsplsV3WOJP-3P0RAQ/exec';
+
+    fetch(sheetURL)
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.querySelector('#feedbackTable tbody');
+        data.slice(1).forEach(row => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${row[0]}</td>
+            <td>${row[1]}</td>
+            <td>${row[2]}</td>
+            <td>${row[3]}</td>
+            <td>${row[4]}</td>
+            <td>${row[5]}</td>
+            <td>${row[6]}</td>
+            <td>${row[7]}</td>
+            <td>${row[8]}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        const tbody = document.querySelector('#feedbackTable tbody');
+        tbody.innerHTML = `<tr><td colspan="9">Unable to load feedback data.</td></tr>`;
+      });
+  </script>
+</body>
+</html>
