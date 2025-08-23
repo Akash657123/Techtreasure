@@ -31,6 +31,27 @@
       color: #333;
     }
 
+    .back-button {
+      display: block;
+      margin: 0 auto 20px auto;
+      padding: 8px 16px;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+      width: fit-content;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(to right, #57c6c6, #8e9eab);
+      transform: scale(1.05);
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -87,6 +108,7 @@
 </head>
 <body>
   <div class="viewer-container">
+    <a href="Feedbackform.html" class="back-button">🔙 Go Back to Form</a>
     <h2>Submitted Feedback</h2>
     <table id="feedbackTable">
       <thead></thead>
