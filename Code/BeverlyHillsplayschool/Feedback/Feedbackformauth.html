@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Beverly Hills Pre School - Teacher Feedback Form</title>
+  <script>
+    // Redirect if not logged in
+    if (localStorage.getItem("loggedIn") !== "true") {
+      alert("Please log in to access the feedback form.");
+      window.location.href = "login.html";
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "login.html";
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #fceabb, #f8b500);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .school-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(to right, #f8b500, #fceabb);
+      border-bottom: 5px solid #fff3d1;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+
+    .school-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .school-header h1 {
+      font-size: 32px;
+      color: #4a3f2f;
+      margin: 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .school-header .tagline {
+      font-size: 16px;
+      color: #6d5c3d;
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #f8b500;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #f8b500;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #d89c00;
+    }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .view-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .view-link a {
+      color: #333;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .view-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="school-header">
+    <img src="logo.png" alt="Beverly Hills Pre School Logo" class="school-logo">
+    <h1>Beverly Hills Pre School</h1>
+    <p class="tagline">Nurturing Little Minds with Big Dreams</p>
+  </div>
+
+  <div class="form-container">
+    <h2>Teacher Feedback Form</h2>
+    <form id="feedback-form">
+      <label for="studentName">Your Name</label>
+      <input type="text" id="studentName" name="studentName" required>
+
+      <label for="teacherName">Teacher's Name</label>
+      <input type="text" id="teacherName" name="teacherName" required>
+
+      <label for="subject">Subject Taught</label>
+      <input type="text" id="subject" name="subject" required>
+
+      <label for="communication">Communication Skills</label>
+      <select id="communication" name="communication" required>
+        <option value="">Select</option>
+        <option value="Excellent">Excellent</option>
+        <option value="Good">Good</option>
+        <option value="Average">Average</option>
+        <option value="Poor">Poor</option>
+      </select>
+
+      <label for="behavior">Behavior with Students</label>
+      <select id="behavior" name="behavior" required>
+        <option value="">Select</option>
+        <option value="Respectful">Respectful</option>
+        <option value="Friendly">Friendly</option>
+        <option value="Strict">Strict</option>
+        <option value="Unapproachable">Unapproachable</option>
+      </select>
+
+      <label for="punctuality">Punctuality</label>
+      <select id="punctuality" name="punctuality" required>
+        <option value="">Select</option>
+        <option value="Always on time">Always on time</option>
+        <option value="Mostly on time">Mostly on time</option>
+        <option value="Sometimes late">Sometimes late</option>
+        <option value="Often late">Often late</option>
+      </select>
+
+      <label for="clarity">Clarity of Teaching</label>
+      <select id="clarity" name="clarity" required>
+        <option value="">Select</option>
+        <option value="Very clear">Very clear</option>
+        <option value="Clear">Clear</option>
+        <option value="Somewhat confusing">Somewhat confusing</option>
+        <option value="Confusing">Confusing</option>
+      </select>
+
+      <label for="overall">Overall Rating</label>
+      <select id="overall" name="overall" required>
+        <option value="">Select</option>
+        <option value="5 - Excellent">5 - Excellent</option>
+        <option value="4 - Good">4 - Good</option>
+        <option value="3 - Average">3 - Average</option>
+        <option value="2 - Poor">2 - Poor</option>
+        <option value="1 - Very Poor">1 - Very Poor</option>
+      </select>
+
+      <label for="comments">Additional Comments</label>
+      <textarea id="comments" name="comments" rows="4"></textarea>
+
+      <button type="submit">Submit</button>
+      <div class="success-message" id="success">Thank you for your feedback!</div>
+    </form>
+
+    <div class="view-link">
+      <a href="Feedbackviewer.html">🔍 View Submitted Feedback</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedback-form');
+    const successMessage = document.getElementById('success');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const data = {
+        studentName: form.studentName.value,
+        teacherName: form.teacherName.value,
+        subject: form.subject.value,
+        communication: form.communication.value,
+        behavior: form.behavior.value,
+        punctuality: form.punctuality.value,
+        clarity: form.clarity.value,
+        overall: form.overall.value,
+        comments: form.comments.value
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbxRxdm671v0kv28PLn6M1q9rnh23lTpiieBQpiEiAwd6x8AyDNumz1viYlkZrBcgL3C4Q/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      form.reset();
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
