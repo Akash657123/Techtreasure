@@ -9,7 +9,7 @@
 <body>
 
 <header>
-  <h1>🍕 Order your food from shrishthi Ki</h1>
+  <h1>🍕 Order your food from Shrishti Kitchen with love</h1>
 </header>
 
 <section class="menu">
@@ -22,13 +22,13 @@
   </div>
   <div class="card">
     <img src="https://source.unsplash.com/featured/?burger" alt="Veg Burger" />
-    <h3>Veg Burger</h3>
+    <h3>Bhindi Masala</h3>
     <p>₹150</p>
     <button onclick="addToCart('Veg Burger', 150)">Add to Cart</button>
   </div>
   <div class="card">
     <img src="https://source.unsplash.com/featured/?wrap" alt="Paneer Wrap" />
-    <h3>Paneer Wrap</h3>
+    <h3>Soya Chilli</h3>
     <p>₹180</p>
     <button onclick="addToCart('Paneer Wrap', 180)">Add to Cart</button>
   </div>
@@ -134,7 +134,7 @@
       paymentStatus
     };
 
-    fetch('YOUR_WEB_APP_URL', {
+    fetch('', {
       method: 'POST',
       body: JSON.stringify(orderData),
       headers: { 'Content-Type': 'application/json' }
