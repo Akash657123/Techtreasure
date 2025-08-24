@@ -7,12 +7,48 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #74ebd5, #ACB6E5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+    }
+
+    .school-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(to right, #ACB6E5, #74ebd5);
+      border-bottom: 5px solid #d0f0f7;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .school-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .school-header h1 {
+      font-size: 32px;
+      color: #2c3e50;
+      margin: 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .school-header .tagline {
+      font-size: 16px;
+      color: #34495e;
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .viewer-container {
@@ -20,8 +56,9 @@
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 900px;
+      width: 90%;
+      max-width: 1000px;
+      margin: 30px auto;
       overflow-x: auto;
     }
 
@@ -31,40 +68,90 @@
       color: #333;
     }
 
+    .back-button {
+      display: block;
+      margin: 0 auto 20px auto;
+      padding: 8px 16px;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+      width: fit-content;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(to right, #57c6c6, #8e9eab);
+      transform: scale(1.05);
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    thead th {
+      background-color: #e0f7fa;
+      color: #333;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
     th, td {
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
       text-align: left;
       font-size: 14px;
     }
 
-    th {
-      background-color: #f0f0f0;
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+      background-color: #e6f7ff;
+      transition: background-color 0.3s ease;
     }
 
     button {
-      padding: 5px 10px;
-      background-color: #74ebd5;
+      padding: 6px 12px;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
       border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 14px;
+      border-radius: 20px;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #57c6c6;
+      background: linear-gradient(to right, #57c6c6, #8e9eab);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
+  <div class="school-header">
+    <img src="logo-placeholder.png" alt="Beverly Hills Pre School Logo" class="school-logo">
+    <h1>Beverly Hills Pre School</h1>
+    <p class="tagline">Nurturing Little Minds with Big Dreams</p>
+  </div>
+
   <div class="viewer-container">
+    <a href="Feedbackform.html" class="back-button">🔙 Go Back to Form</a>
     <h2>Submitted Feedback</h2>
     <table id="feedbackTable">
       <thead></thead>
@@ -88,17 +175,17 @@
       tableHead.innerHTML = "";
       tableBody.innerHTML = "";
 
-      // Create header row
       const headerRow = document.createElement("tr");
       data[0].forEach(header => {
         const th = document.createElement("th");
         th.textContent = header;
         headerRow.appendChild(th);
       });
-      headerRow.appendChild(document.createElement("th")).textContent = "Actions";
+      const actionTh = document.createElement("th");
+      actionTh.textContent = "Actions";
+      headerRow.appendChild(actionTh);
       tableHead.appendChild(headerRow);
 
-      // Create data rows
       data.slice(1).forEach(row => {
         const tr = document.createElement("tr");
         row.forEach(cell => {
