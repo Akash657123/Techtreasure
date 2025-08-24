@@ -12,42 +12,59 @@
       padding: 0;
       color: #333;
     }
+
     header {
       background: #ff7043;
       color: white;
       padding: 1rem;
       text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
     .menu {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
       max-width: 1000px;
       margin: auto;
     }
+
     .card {
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
     .card img {
       width: 100%;
       height: 140px;
       object-fit: cover;
       border-radius: 6px;
     }
+
     .card h3 {
       margin: 0.5rem 0 0.2rem;
+      font-size: 1.1rem;
     }
+
     .card p {
       margin: 0.2rem 0 0.8rem;
+      font-weight: bold;
+      color: #444;
     }
+
     button {
       background: #ff7043;
       color: white;
@@ -55,27 +72,59 @@
       padding: 0.5rem 1rem;
       cursor: pointer;
       border-radius: 4px;
+      transition: background 0.3s ease;
     }
+
     button:hover {
       background: #e64a19;
     }
+
     .cart, .checkout {
-      padding: 1rem;
+      padding: 2rem 1rem;
       max-width: 800px;
       margin: auto;
+      border-top: 2px solid #ffe0d3;
     }
+
     input[type="text"] {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       margin-top: 0.5rem;
       border: 1px solid #ccc;
       border-radius: 4px;
+      transition: border-color 0.3s ease;
     }
+
+    input[type="text"]:focus {
+      border-color: #ff7043;
+      outline: none;
+    }
+
     .cart-items {
       margin-top: 1rem;
+      padding: 0.5rem;
+      background: #fff3e0;
+      border-radius: 6px;
     }
+
+    .cart-items div {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #ffd1b3;
+    }
+
+    .cart-items div:last-child {
+      border-bottom: none;
+    }
+
     #upiField {
       margin-top: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    label {
+      font-weight: 500;
+      margin-top: 0.5rem;
+      display: inline-block;
     }
   </style>
 </head>
@@ -90,7 +139,7 @@
     <img src="chickenchilly.jfif" alt="Chicken Chilly" />
     <h3>Chicken Chilly</h3>
     <p>₹250</p>
-    <button onclick="addToCart('Chicken Chilly, '250)">Add to Cart</button>
+    <button onclick="addToCart('Chicken Chilly', 250)">Add to Cart</button>
   </div>
   <div class="card">
     <img src="https://source.unsplash.com/featured/?burger" alt="Veg Burger" />
@@ -103,6 +152,24 @@
     <h3>Paneer Wrap</h3>
     <p>₹180</p>
     <button onclick="addToCart('Paneer Wrap', 180)">Add to Cart</button>
+  </div>
+  <div class="card">
+    <img src="https://source.unsplash.com/featured/?pizza" alt="Margherita Pizza" />
+    <h3>Margherita Pizza</h3>
+    <p>₹300</p>
+    <button onclick="addToCart('Margherita Pizza', 300)">Add to Cart</button>
+  </div>
+  <div class="card">
+    <img src="https://source.unsplash.com/featured/?pasta" alt="White Sauce Pasta" />
+    <h3>White Sauce Pasta</h3>
+    <p>₹220</p>
+    <button onclick="addToCart('White Sauce Pasta', 220)">Add to Cart</button>
+  </div>
+  <div class="card">
+    <img src="https://source.unsplash.com/featured/?fries" alt="French Fries" />
+    <h3>French Fries</h3>
+    <p>₹120</p>
+    <button onclick="addToCart('French Fries', 120)">Add to Cart</button>
   </div>
 </section>
 
@@ -164,26 +231,34 @@
       return;
     }
 
-    let message = `✅ Order placed!\nTotal: ₹${total}\nDelivery to: ${address}\nPayment Method: ${paymentMethod}`;
-    if (paymentMethod === 'UPI') {
-      message += `\nUPI ID: ${upiId}`;
-    }
+    const paymentStatus = paymentMethod === 'UPI' ? 'Success' : 'Pending';
 
-    alert(message);
-    cart = [];
-    total = 0;
-    updateCart();
-    document.getElementById('address').value = '';
-    document.getElementById('upiId').value = '';
+    const orderData = {
+      items: cart.map(entry => entry.item),
+      total,
+      address,
+      paymentMethod,
+      upiId,
+      paymentStatus
+    };
+
+    fetch('YOUR_WEB_APP_URL', {
+      method: 'POST',
+      body: JSON.stringify(orderData),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(() => {
+      alert(`✅ Order placed!\nTotal: ₹${total}\nDelivery to: ${address}\nPayment Method: ${paymentMethod}`);
+      cart = [];
+      total = 0;
+      updateCart();
+      document.getElementById('address').value = '';
+      document.getElementById('upiId').value = '';
+    })
+    .catch(err => {
+      alert('❌ Failed to send order to Google Sheets.');
+      console.error(err);
+    });
   }
 
-  document.querySelectorAll('input[name="payment"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-      const upiField = document.getElementById('upiField');
-      upiField.style.display = radio.value === 'UPI' ? 'block' : 'none';
-    });
-  });
-</script>
-
-</body>
-</html>
+  document.querySelectorAll('input[name="payment"]').forEach(radio =>
