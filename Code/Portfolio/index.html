@@ -1,81 +1,34 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background: #f9f9f9;
-      }
-      .card {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 16px;
-        margin: 10px;
-        width: 250px;
-        display: inline-block;
-        vertical-align: top;
-        background: #fff;
-        box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-      }
-      .card a {
-        text-decoration: none;
-        color: #0077cc;
-      }
-      .card h3 {
-        margin: 0 0 10px;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 5px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>📤 Upload a File</h2>
-    <form id="uploadForm">
-      <input type="file" name="myFile" required /><br><br>
-      <input type="submit" value="Upload" />
-    </form>
-    <div id="output"></div>
+<input type="file" id="fileInput" />
+<button onclick="uploadFile()">Upload</button>
 
-    <hr>
-    <h2>📁 Uploaded Files</h2>
-    <div id="cards"></div>
+<script>
+  async function uploadFile() {
+    const file = document.getElementById('fileInput').files[0];
+    const reader = new FileReader();
 
-    <script>
-      document.getElementById("uploadForm").onsubmit = function(e) {
-        e.preventDefault();
-        const formData = new FormData(document.getElementById("uploadForm"));
-        google.script.run.withSuccessHandler(function(file) {
-          document.getElementById("output").innerHTML = `
-            <p>✅ Uploaded: <a href="${file.viewUrl}" target="_blank">${file.name}</a></p>
-            <p>⬇️ <a href="${file.downloadUrl}" target="_blank">Download File</a></p>
-          `;
-          loadCards();
-        }).uploadFile(formData);
+    reader.onload = async () => {
+      const base64 = reader.result.split(',')[1];
+      const payload = {
+        folderId: 'YOUR_FOLDER_ID',
+        fileName: file.name,
+        mimeType: file.type,
+        fileData: base64
       };
 
-      function loadCards() {
-        google.script.run.withSuccessHandler(function(files) {
-          const container = document.getElementById("cards");
-          container.innerHTML = "";
-          files.forEach(file => {
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-              <h3>${file.name}</h3>
-              <p><a href="${file.viewUrl}" target="_blank">🔍 View</a></p>
-              <p><a href="${file.downloadUrl}" target="_blank">⬇️ Download</a></p>
-              <p><small>📅 ${new Date(file.date).toLocaleString()}</small></p>
-            `;
-            container.appendChild(card);
-          });
-        }).getUploadedFiles();
-      }
+      const response = await fetch('YOUR_WEB_APP_URL', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-      window.onload = loadCards;
-    </script>
-  </body>
-</html>
+      const result = await response.json();
+      if (result.success) {
+        alert('Uploaded: ' + result.fileUrl);
+      } else {
+        alert('Error: ' + result.error);
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+</script>
