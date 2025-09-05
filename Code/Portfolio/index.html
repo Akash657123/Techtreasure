@@ -15,7 +15,8 @@
         fileData: base64
       };
 
-      const response = await fetch('YOUR_WEB_APP_URL', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyC0XOumldbwVF5oEQ3YVFjFtvMHFFYN1LFfOpp8oH9nMM7G6P735NhGRY_FIYPyt4R/exec',
+                                   {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' }
