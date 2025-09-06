@@ -2,54 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Secure File Upload</title>
+  <title>Upload to Google Drive</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: #f0f8ff;
       padding: 40px;
-    }
-    h1 {
-      color: #333;
+      display: flex;
+      justify-content: center;
     }
     .upload-box {
       background: #fff;
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 500px;
       width: 100%;
+    }
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
     }
     input[type="file"] {
       margin-top: 10px;
     }
     .output {
       margin-top: 20px;
-      white-space: pre-wrap;
       background: #eef;
       padding: 10px;
       border-radius: 8px;
-      max-height: 300px;
-      overflow-y: auto;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
-  <h1>📁 Upload Your File</h1>
   <div class="upload-box">
-    <input type="file" id="fileInput" accept=".txt,.csv,.json"/>
-    <div class="output" id="output">File content will appear here...</div>
+    <h2>📁 Upload File to Google Drive</h2>
+    <input type="file" id="fileInput" accept=".txt,.csv,.json" />
+    <div class="output" id="output">Waiting for upload...</div>
   </div>
 
   <script>
-    document.getElementById('fileInput').addEventListener('change', uploadFile);
+    const scriptURL = "https://script.google.com/macros/s/AKfycbx898SmMtsfci2sIgl72h4saiY_VwKSCf3zDJyxBimSMhjYCfp9RtbxcAyWdaDkvpqn/exec"; // Replace with your deployed Apps Script URL
 
-    function uploadFile(event) {
+    document.getElementById('fileInput').addEventListener('change', function(event) {
       const file = event.target.files[0];
       const output = document.getElementById('output');
 
@@ -58,31 +54,34 @@
         return;
       }
 
-      // Optional: Validate file size (e.g., max 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        output.textContent = "⚠️ File too large. Please upload a file under 2MB.";
-        return;
-      }
-
       const reader = new FileReader();
 
       reader.onload = function(e) {
-        try {
-          const content = e.target.result;
-          output.textContent = `✅ File loaded successfully:\n\n${content}`;
-        } catch (err) {
-          console.error("Processing error:", err);
-          output.textContent = "❌ Upload failed during processing.";
-        }
+        const base64Data = btoa(e.target.result); // Encode file content to base64
+
+        fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify({
+            filename: file.name,
+            mimeType: file.type || "text/plain",
+            data: base64Data
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.text())
+        .then(data => output.textContent = `✅ Server response:\n${data}`)
+        .catch(err => {
+          console.error(err);
+          output.textContent = "❌ Upload failed.";
+        });
       };
 
-      reader.onerror = function(err) {
-        console.error("FileReader error:", err);
-        output.textContent = "❌ Upload failed: Unable to read file.";
+      reader.onerror = function() {
+        output.textContent = "❌ File read error.";
       };
 
-      reader.readAsText(file); // You can change to readAsDataURL for images
-    }
+      reader.readAsBinaryString(file); // Use binary string for base64 encoding
+    });
   </script>
 </body>
 </html>
