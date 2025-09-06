@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Transaction Viewer</title>
   <style>
     body {
@@ -48,18 +49,18 @@
   </table>
 
   <script>
-    fetch('YOUR_SCRIPT_URL')
+    fetch('YOUR_SCRIPT_URL') // Replace with your actual Apps Script URL
       .then(res => res.json())
       .then(data => {
         const tbody = document.querySelector('#transactionTable tbody');
         data.forEach(tx => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${tx.Date}</td>
-            <td>${tx.Type}</td>
-            <td>₹${tx.Amount}</td>
-            <td>${tx.Description}</td>
-            <td>${tx.Timestamp}</td>
+            <td>${tx.Date || ''}</td>
+            <td>${tx.Type || ''}</td>
+            <td>₹${tx.Amount || '0'}</td>
+            <td>${tx.Description || ''}</td>
+            <td>${tx.Timestamp || ''}</td>
           `;
           tbody.appendChild(row);
         });
