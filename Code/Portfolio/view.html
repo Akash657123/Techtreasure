@@ -90,7 +90,7 @@
       if (!confirm("Are you sure you want to delete this transaction?")) return;
 
       fetch(scriptURL, {
-        method: 'DELETE,
+        method: 'DELETE',
         mode:'no-cors',
         body: JSON.stringify({ row: rowIndex }),
         headers: {
