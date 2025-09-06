@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload to Google Drive</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+    .upload-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    input[type="file"] {
+      margin-top: 10px;
+    }
+    .output {
+      margin-top: 20px;
+      background: #eef;
+      padding: 10px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-box">
+    <h2>📁 Upload File to Google Drive</h2>
+    <input type="file" id="fileInput" accept=".txt,.csv,.json,.jpg,.png,.pdf" />
+    <div class="output" id="output">Waiting for upload...</div>
+  </div>
+
+  <script>
+    const scriptURL = "YOUR_SCRIPT_WEB_APP_URL"; // Replace with your deployed Apps Script URL
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const output = document.getElementById('output');
+
+      if (!file) {
+        output.textContent = "❌ No file selected.";
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+
+        fetch(scriptURL, {
+          method: 'POST',
+          mode:'no-cors',
+          
+          body: JSON.stringify({
+            filename: file.name,
+            dataUrl: dataUrl
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.text())
+        .then(data => output.textContent = `✅ Server response:\n${data}`)
+        .catch(err => {
+          console.error(err);
+          output.textContent = "❌ Upload failed.";
+        });
+      };
+
+      reader.onerror = function() {
+        output.textContent = "❌ File read error.";
+      };
+
+      reader.readAsDataURL(file); // preserves MIME type
+    });
+  </script>
+</body>
+</html>
