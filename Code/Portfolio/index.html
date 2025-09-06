@@ -23,6 +23,7 @@
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbzJY2bey91SOlylK6IDPPxk3PmvghPs1pDRrbHbcEqo_n5b8j33FuiylhjR7GNZCtA0/exec', {
           method: 'POST',
+          mode:'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
