@@ -1,45 +1,88 @@
-<input type="file" id="fileInput" />
-<button onclick="uploadFile()">Upload</button>
-
-<script>
-  async function uploadFile() {
-    const file = document.getElementById('fileInput').files[0];
-    if (!file) {
-      alert("Please select a file.");
-      return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure File Upload</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
     }
+    h1 {
+      color: #333;
+    }
+    .upload-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    input[type="file"] {
+      margin-top: 10px;
+    }
+    .output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #eef;
+      padding: 10px;
+      border-radius: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>📁 Upload Your File</h1>
+  <div class="upload-box">
+    <input type="file" id="fileInput" accept=".txt,.csv,.json"/>
+    <div class="output" id="output">File content will appear here...</div>
+  </div>
 
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const base64 = reader.result.split(',')[1];
+  <script>
+    document.getElementById('fileInput').addEventListener('change', uploadFile);
 
-      const payload = {
-        folderId: '1Bd8uufIR61y331ce1nzmYgxUfI-NgtkD',
-        fileName: file.name,
-        mimeType: file.type,
-        fileData: base64
+    function uploadFile(event) {
+      const file = event.target.files[0];
+      const output = document.getElementById('output');
+
+      if (!file) {
+        output.textContent = "❌ No file selected.";
+        return;
+      }
+
+      // Optional: Validate file size (e.g., max 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        output.textContent = "⚠️ File too large. Please upload a file under 2MB.";
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        try {
+          const content = e.target.result;
+          output.textContent = `✅ File loaded successfully:\n\n${content}`;
+        } catch (err) {
+          console.error("Processing error:", err);
+          output.textContent = "❌ Upload failed during processing.";
+        }
       };
 
-      try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzJY2bey91SOlylK6IDPPxk3PmvghPs1pDRrbHbcEqo_n5b8j33FuiylhjR7GNZCtA0/exec', {
-          method: 'POST',
-          mode:'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+      reader.onerror = function(err) {
+        console.error("FileReader error:", err);
+        output.textContent = "❌ Upload failed: Unable to read file.";
+      };
 
-        const result = await response.json();  // Only works if CORS is enabled on server
-        if (result.success) {
-          alert('Uploaded: ' + result.fileUrl);
-        } else {
-          alert('Error: ' + result.error);
-        }
-      } catch (err) {
-        console.error('Upload failed:', err);
-        alert('Upload failed. See console for details.');
-      }
-    };
-
-    reader.readAsDataURL(file);
-  }
-</script>
+      reader.readAsText(file); // You can change to readAsDataURL for images
+    }
+  </script>
+</body>
+</html>
