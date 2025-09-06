@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Enter Transaction</title>
   <style>
     body {
@@ -45,6 +46,22 @@
     button:hover {
       background: #005fa3;
     }
+    .link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .link a {
+      text-decoration: none;
+      background: #0078D4;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .link a:hover {
+      background: #005fa3;
+    }
   </style>
 </head>
 <body>
@@ -69,7 +86,13 @@
     <button type="submit">Submit</button>
   </form>
 
+  <div class="link">
+    <a href="view.html">View Transactions</a>
+  </div>
+
   <script>
+    const scriptURL = 'YOUR_SCRIPT_URL'; // Replace with your Apps Script URL
+
     const form = document.getElementById('transactionForm');
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -81,7 +104,7 @@
         description: document.getElementById('description').value
       };
 
-      fetch('https://script.google.com/macros/s/AKfycbzVd3fPCqV0AhSyIGvvLSVdIYwZbWHWZqmNW3BAsBZniqAFTi1A-yvQYClV_hBhZX2phQ/exec', {
+      fetch(scriptURL, {
         method: 'POST',
         mode:'no-cors',
         body: JSON.stringify(data),
