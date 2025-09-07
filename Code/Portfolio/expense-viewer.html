@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background: #0078D4;
+      color: white;
+    }
+
+    button {
+      padding: 6px 12px;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c9302c;
+    }
+  </style>
+</head>
+<body>
+  <h2>Expense Details</h2>
+  <table id="expenseTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Expense Detail</th>
+        <th>Timestamp</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby7Vkh8fnUUoZ4_7nCJc1_CtTiy476qMI51VorcEknZqmrJj_aBk9iwNOysOODTq7gF8A/exec'; // Replace with your Apps Script URL
+
+    fetch(scriptURL)
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#expenseTable tbody');
+        data.forEach(entry => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${entry.Date || ''}</td>
+            <td>₹${entry.Amount || '0'}</td>
+            <td>${entry.Detail || ''}</td>
+            <td>${entry.Timestamp || ''}</td>
+            <td><button onclick='deleteRow("${entry.Date}")'>🗑️</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+
+    function deleteRow(date) {
+      if (!confirm("Delete this expense?")) return;
+
+      const payload = { mode: "delete", date: date };
+
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      alert("Delete request sent!");
+      location.reload();
+    }
+  </script>
+</body>
+</html>
