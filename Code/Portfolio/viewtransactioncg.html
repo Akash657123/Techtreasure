@@ -60,94 +60,90 @@
     <tbody></tbody>
   </table>
 
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxGMUlUR8ov_xybzJS2eWCpS2c0-q_5VyErXBH7gaudsvydZ8dW9LSUdgbRs60pfd1uuQ/exec'; // ← Replace with deployed URL
+ <script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxGMUlUR8ov_xybzJS2eWCpS2c0-q_5VyErXBH7gaudsvydZ8dW9LSUdgbRs60pfd1uuQ/exec';
 
-    function formatDateDDMMYYYY(dateStr) {
-      if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
-      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-        const [y, m, d] = dateStr.split("-");
-        return `${d}/${m}/${y}`;
-      }
-      const date = new Date(dateStr);
-      if (!isNaN(date)) {
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-      }
-      return dateStr;
+  function formatDateDDMMYYYY(dateStr) {
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
+    const date = new Date(dateStr);
+    if (!isNaN(date)) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
     }
+    return dateStr;
+  }
 
-    function formatIST(timestampStr) {
-      const date = new Date(timestampStr);
-      if (isNaN(date)) return timestampStr;
-      const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
-      const istOffset = 5.5 * 60 * 60000;
-      const istDate = new Date(utc + istOffset);
-      const day = String(istDate.getDate()).padStart(2, '0');
-      const month = String(istDate.getMonth() + 1).padStart(2, '0');
-      const year = istDate.getFullYear();
-      const hours = String(istDate.getHours()).padStart(2, '0');
-      const minutes = String(istDate.getMinutes()).padStart(2, '0');
-      const seconds = String(istDate.getSeconds()).padStart(2, '0');
-      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-    }
+  function formatIST(timestampStr) {
+    const date = new Date(timestampStr);
+    if (isNaN(date)) return timestampStr;
+    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    const istOffset = 5.5 * 60 * 60000;
+    const istDate = new Date(utc + istOffset);
+    const day = String(istDate.getDate()).padStart(2, '0');
+    const month = String(istDate.getMonth() + 1).padStart(2, '0');
+    const year = istDate.getFullYear();
+    const hours = String(istDate.getHours()).padStart(2, '0');
+    const minutes = String(istDate.getMinutes()).padStart(2, '0');
+    const seconds = String(istDate.getSeconds()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  }
 
-    fetch(scriptURL)
-      .then(res => res.json())
-      .then(data => {
-        const tbody = document.querySelector('#transactionTable tbody');
-        data.forEach(tx => {
-          const formattedDate = formatDateDDMMYYYY(tx.Date || '');
-          const formattedTimestamp = formatIST(tx.TIMESTAMP || '');
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${formattedDate}</td>
-            <td>${tx.Type || ''}</td>
-            <td>₹${parseFloat(tx.Amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-            <td>${tx.Description || ''}</td>
-            <td>${formattedTimestamp}</td>
-            <td><button onclick='deleteRow("${tx.ID}", this)'>🗑️ Delete</button></td>
-          `;
-          tbody.appendChild(row);
-        });
-      })
-      .catch(err => {
-        console.error("Error loading data:", err);
-        alert("Failed to load transactions.");
+  fetch(scriptURL)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#transactionTable tbody');
+      data.forEach(tx => {
+        const formattedDate = formatDateDDMMYYYY(tx.Date || '');
+        const formattedTimestamp = formatIST(tx.TIMESTAMP || '');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${formattedDate}</td>
+          <td>${tx.Type || ''}</td>
+          <td>₹${tx.Amount || '0'}</td>
+          <td>${tx.Description || ''}</td>
+          <td>${formattedTimestamp}</td>
+          <td><button onclick='deleteRow("${tx.ID}", this)'>🗑️ Delete</button></td>
+        `;
+        tbody.appendChild(row);
       });
+    })
+    .catch(err => {
+      console.error("Error loading data:", err);
+      alert("Failed to load transactions.");
+    });
 
-    function deleteRow(id, btn) {
-      if (!confirm("Are you sure you want to delete this transaction?")) return;
+  function deleteRow(id, btn) {
+    if (!confirm("Are you sure you want to delete this transaction?")) return;
 
-      const payload = {
-        mode: "delete",
-        id: id
-      };
+    const payload = {
+      mode: "delete",
+      id: id
+    };
 
-      fetch(scriptURL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert("Deleted successfully!");
-          btn.closest('tr').remove();
-        } else {
-          alert("Failed to delete: " + data.message);
-        }
-      })
-      .catch(err => {
-        console.error("Delete failed:", err);
-        alert("Error deleting transaction.");
-      });
-    }
-  </script>
+    fetch(scriptURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.success) {
+        alert("Transaction deleted.");
+        btn.closest('tr').remove();
+      } else {
+        alert("Failed to delete: " + result.message);
+      }
+    })
+    .catch(err => {
+      console.error("Delete failed:", err);
+      alert("Failed to delete transaction.");
+    });
+  }
+</script>
+
 </body>
 </html>
