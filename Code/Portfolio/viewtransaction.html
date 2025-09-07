@@ -53,7 +53,7 @@
         <th>Type</th>
         <th>Amount</th>
         <th>Description</th>
-        <th>Timestamp</th>
+        <th>Timestamp (IST)</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -64,15 +64,34 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwHfQHZ3n_b643LKDMPJsSTr7YWsgnXYozmELNiYOfNgLlgjgBa3fldBFcILAWmZq5JcA/exec';
 
     function formatDateDDMMYYYY(dateStr) {
-      // Handles both "ddMMyyyy" and "yyyy-mm-dd" formats
-      if (/^\d{8}$/.test(dateStr)) {
-        return `${dateStr.slice(0,2)}/${dateStr.slice(2,4)}/${dateStr.slice(4)}`;
-      }
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
       if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
         const [y, m, d] = dateStr.split("-");
         return `${d}/${m}/${y}`;
       }
-      return dateStr; // fallback
+      const date = new Date(dateStr);
+      if (!isNaN(date)) {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+      return dateStr;
+    }
+
+    function formatIST(timestampStr) {
+      const date = new Date(timestampStr);
+      if (isNaN(date)) return timestampStr;
+      const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+      const istOffset = 5.5 * 60 * 60000;
+      const istDate = new Date(utc + istOffset);
+      const day = String(istDate.getDate()).padStart(2, '0');
+      const month = String(istDate.getMonth() + 1).padStart(2, '0');
+      const year = istDate.getFullYear();
+      const hours = String(istDate.getHours()).padStart(2, '0');
+      const minutes = String(istDate.getMinutes()).padStart(2, '0');
+      const seconds = String(istDate.getSeconds()).padStart(2, '0');
+      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     }
 
     fetch(scriptURL)
@@ -81,13 +100,14 @@
         const tbody = document.querySelector('#transactionTable tbody');
         data.forEach(tx => {
           const formattedDate = formatDateDDMMYYYY(tx.Date || '');
+          const formattedTimestamp = formatIST(tx.Timestamp || '');
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${formattedDate}</td>
             <td>${tx.Type || ''}</td>
             <td>₹${tx.Amount || '0'}</td>
             <td>${tx.Description || ''}</td>
-            <td>${tx.Timestamp || ''}</td>
+            <td>${formattedTimestamp}</td>
             <td><button onclick='deleteRow("${tx.Date}", "${tx.Type}", "${tx.Amount}", "${tx.Description}")'>🗑️ Delete</button></td>
           `;
           tbody.appendChild(row);
