@@ -61,14 +61,13 @@
   </table>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwS2hhUEdd3hC_Pq1qJ-Cg3_g_cmEXCdTuPVczFy1a02ck8eH4ukjfovMF1dGzghdKhPQ/exec'; // Replace with your Apps Script URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyMkKrhZFzGoEOoq0pxUSmC652SJNTZIBlUBUBiIU18rEAh97xl9Up5wJwmUYd1mL83kg/exec';
 
     fetch(scriptURL)
       .then(res => res.json())
       .then(data => {
         const tbody = document.querySelector('#transactionTable tbody');
-        data.forEach((tx, index) => {
-          const rowIndex = index + 2; // +2 for header and 1-based index
+        data.forEach(tx => {
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${tx.Date || ''}</td>
@@ -76,7 +75,7 @@
             <td>₹${tx.Amount || '0'}</td>
             <td>${tx.Description || ''}</td>
             <td>${tx.Timestamp || ''}</td>
-            <td><button onclick="deleteRow(${rowIndex})">🗑️ Delete</button></td>
+            <td><button onclick='deleteRow("${tx.Date}", "${tx.Type}", "${tx.Amount}", "${tx.Description}")'>🗑️ Delete</button></td>
           `;
           tbody.appendChild(row);
         });
@@ -86,21 +85,27 @@
         alert("Failed to load transactions.");
       });
 
-    function deleteRow(rowIndex) {
+    function deleteRow(date, type, amount, description) {
       if (!confirm("Are you sure you want to delete this transaction?")) return;
+
+      const payload = {
+        mode: "delete",
+        date: date,
+        type: type,
+        amount: amount,
+        description: description
+      };
 
       fetch(scriptURL, {
         method: 'POST',
-        mode:'no-cors',
-        
-        body: JSON.stringify({ row: rowIndex }),
+        mode: 'no-cors',
+        body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json'
         }
       })
-      .then(res => res.text())
-      .then(msg => {
-        alert("Transaction deleted!");
+      .then(() => {
+        alert("Delete request sent!");
         location.reload();
       })
       .catch(err => {
