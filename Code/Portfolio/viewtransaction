@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transaction Viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+    th {
+      background: #0078D4;
+      color: white;
+    }
+    button {
+      padding: 5px 10px;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #c9302c;
+    }
+  </style>
+</head>
+<body>
+  <h2>Transaction History</h2>
+  <table id="transactionTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Timestamp</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwn8BBYCxfRVdSMfzr9uL4QbaKL1O3mrBMDDJwGQGcq45BlSdbFvFH7BQIVLDJjqaX14Q/exec'; // Replace with your Apps Script URL
+
+    fetch(scriptURL)
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#transactionTable tbody');
+        data.forEach(tx => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${tx.Date || ''}</td>
+            <td>${tx.Type || ''}</td>
+            <td>₹${tx.Amount || '0'}</td>
+            <td>${tx.Description || ''}</td>
+            <td>${tx.Timestamp || ''}</td>
+            <td><button onclick='deleteRow("${tx.Date}", "${tx.Type}", "${tx.Amount}", "${tx.Description}")'>🗑️ Delete</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error("Error loading data:", err);
+        alert("Failed to load transactions.");
+      });
+
+    function deleteRow(date, type, amount, description) {
+      if (!confirm("Are you sure you want to delete this transaction?")) return;
+
+      const payload = {
+        mode: "delete",
+        date: date,
+        type: type,
+        amount: amount,
+        description: description
+      };
+
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+     
