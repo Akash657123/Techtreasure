@@ -3,6 +3,70 @@
 <head>
   <title>Student Attendance</title>
   <link rel="stylesheet" href="../css/style.css">
+  <script>
+    async function loadStudents() {
+      const response = await fetch('../students.json');
+      const students = await response.json();
+      const container = document.getElementById('studentList');
+      container.innerHTML = '';
+      students.forEach(student => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'attendance';
+        checkbox.value = JSON.stringify({ name: student.name, roll: student.roll });
+
+        const label = document.createElement('label');
+        label.textContent = ` ${student.name} (Roll: ${student.roll})`;
+
+        container.appendChild(checkbox);
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+      });
+    }
+
+    async function submitAttendance(event) {
+      event.preventDefault();
+      const className = document.getElementById('classSelect').value;
+      const date = document.getElementById('dateInput').value;
+      const checkboxes = document.querySelectorAll('input[name="attendance"]:checked');
+      const presentStudents = Array.from(checkboxes).map(cb => JSON.parse(cb.value));
+
+      const payload = {
+        class: className,
+        date: date,
+        present: presentStudents
+      };
+
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwaAg8q17DGldZfFiHc0XFIED5x5oNm2oQ4YatEM2BF21s8lRdPQMDFGqFQ_jWpfJG7RA/exec', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const result = await response.text();
+      alert(result);
+    }
+
+    async function fetchAttendance() {
+      const date = document.getElementById('filterDate').value;
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbwaAg8q17DGldZfFiHc0XFIED5x5oNm2oQ4YatEM2BF21s8lRdPQMDFGqFQ_jWpfJG7RA/exec?date=${date}`);
+      const records = await response.json();
+
+      const container = document.getElementById('attendanceResults');
+      container.innerHTML = '<h3>Attendance Records:</h3>';
+      records.forEach(record => {
+        container.innerHTML += `<p>${record.date} - ${record.class} - ${record.name} (Roll: ${record.roll})</p>`;
+      });
+
+      if (records.length === 0) {
+        container.innerHTML += '<p>No records found for this date.</p>';
+      }
+    }
+
+    window.onload = loadStudents;
+  </script>
 </head>
 <body>
   <header>
@@ -14,21 +78,26 @@
   </header>
 
   <main>
-    <form>
+    <form onsubmit="submitAttendance(event)">
       <label>Class:</label><br>
-      <select>
+      <select id="classSelect">
         <option>Nursery</option>
         <option>KG-1</option>
         <option>KG-2</option>
       </select><br>
       <label>Date:</label><br>
-      <input type="date"><br>
+      <input type="date" id="dateInput"><br>
       <p>Mark Attendance:</p>
-      <input type="checkbox"> Alice<br>
-      <input type="checkbox"> Bob<br>
-      <input type="checkbox"> Charlie<br>
+      <div id="studentList">Loading students...</div>
       <button type="submit">Submit</button>
     </form>
+
+    <hr>
+
+    <h2>View Attendance by Date</h2>
+    <input type="date" id="filterDate">
+    <button onclick="fetchAttendance()">Fetch Attendance</button>
+    <div id="attendanceResults"></div>
   </main>
 
   <footer>
